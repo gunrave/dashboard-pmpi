@@ -11,6 +11,7 @@ use App\Http\Requests\UpdatesurveyRequest;
 use DB;
 Use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
+//use Yajra\Datatables\Html\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -37,6 +38,12 @@ class SurveyController extends Controller
 		]);
 		
     }
+	
+	public function dash()
+	{
+		$data = Pmpi::all()->whereNotNull('submitdate');
+		return view('surveys.page1', compact('data'));
+	}
 
     /**
      * Show the form for creating a new resource.
@@ -46,8 +53,9 @@ class SurveyController extends Controller
 	 public function getUnit()
 	 {
 		$column = '2787';
-		$data = Answer::withCount('instansi')
-				->where('qid',$column)
+		$data = Answer::withCount(['instansi' => function(Builder $query){
+			$query->whereNotNull('submitdate');
+		}])		->where('qid',$column)
 				->get(['id', 'code', 'answer', 'qid']);
 				
 		return DataTables::of($data)
@@ -84,7 +92,9 @@ class SurveyController extends Controller
 		$qid = $questions->qid;	
 		
 		$model = new Answer($column);
-		$detail = $model->withCount('unit')
+		$detail = $model->withCount(['unit' => function(Builder $query){
+			$query->whereNotNull('submitdate');
+		}])
 					->where(function ($q) use ($qid){
 						$q->where('qid', $qid);
 					})->get(['code', 'answer']);

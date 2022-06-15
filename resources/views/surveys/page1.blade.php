@@ -41,8 +41,8 @@
 					<img src="https://helpdesk.itjenkumham.com/kumham.png" class="my-2" height="150px" weight="150px" class="img-fluid" alt="Responsive image">
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">Data Responden PMPI <span>| {{ today() }}</span></h5>
-					<table id="category-table" class="table ">
+					<h5 class="card-title">Data Responden PMPI <span>| {{ date('d M Y', strtotime(today())) }} | Total : {{ number_format($data->count()) }} pegawai</span></h5>
+					<table id="category-table" class="table " style="width:100%">
 						<thead>
 							<tr>
 								
@@ -74,8 +74,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 	
 	<script id="details-template" type="text/x-handlebars-template">
-		<div class="label label-info">Responden @{{answer}}</div>
-		<table class="table details-table" id="details-@{{code}}">
+		<div class="label label-info">@{{answer}}</div>
+		<table class="table details-table" id="details-@{{code}}" style="width:100%">
 			<thead>
 			<tr>
 				<th>ID</td>

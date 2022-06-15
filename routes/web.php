@@ -18,9 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
-Route::get('/', function() {
-	return view('surveys.page1');
-});
+Route::get('/', [SurveyController::class, 'dash']);
 
 Auth::routes();
 
