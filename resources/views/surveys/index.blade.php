@@ -3,64 +3,45 @@
 @section('content_header')	
     <h1 class="m-0 text-dark">Data Responden PMPI</h1>
 @stop
+
+@push('css')
+	<style>
+		td.details-control {
+			background: url('https://datatables.yajrabox.com/images/details_open.png') no-repeat center center;
+			cursor: pointer;
+			width: 18px;
+		}
+		tr.shown td.details-control {
+			background: url('https://datatables.yajrabox.com/images/details_close.png') no-repeat center center;
+		}
+	</style>
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
-			<div class="card-body table-responsive">
-				<table id="category-table" class="table table-bordered ">
-                    <thead>
-                        <tr>
-							<th></th>
-                           <th>No.</th>
-                           <!--<th>Kelompok</th>
-                           
-                            <th>ID</th>-->
-                            <th>Unit Kerja/Satker</th>
-                            <th>Total Responden</th>
-                            <!--<th width="200" class="text-center">Action</th>-->
-                        </tr>
-                    </thead>
-                </table>
+			<div class="card"> 
+				<div class="card-body">
+					<table id="category-table" class="table table-hover table-bordered table-stripped table-responsive">
+						<thead>
+							<tr>
+								<th></th>
+							   <th>No.</th>
+							   <!--<th>Kelompok</th>
+							   
+								<th>ID</th>-->
+								<th>Unit Kerja/Satker</th>
+								<th>Total Responden</th>
+								<!--<th width="200" class="text-center">Action</th>-->
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
         </div>
     </div>
-
-<div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Unit</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <table id="detail-table" class="table table-bordered table-responsive">
-			<thead>
-				<tr>
-					
-					  
-					<th>No.</th>
-				 
-				   <!--<th>Kelompok</th>-->
-				   
-					<th>ID</th>
-					<th>Unit Kerja/Satker</th>
-					<th>Total Responden</th>
-				</tr>
-			</thead>
-		</table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 @stop
+
 @push('js')
     <form action="" id="delete-form" method="post">
         @method('delete')
@@ -107,8 +88,10 @@
 					{data: 'DT_RowIndex', name : 'DT_RowIndex'},
 					{data: 'answer', name: 'answer'},
 					{data: 'instansi_count', name: 'instansi_count'},
+					
 					//{data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
 				],
+				paging: false,
 				order: [[1, 'asc']]
 		});
 		function initTable(tableId, data){
@@ -153,5 +136,4 @@
 			}
 		});
     </script>
-	
 @endpush

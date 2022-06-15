@@ -24,7 +24,8 @@ class SurveyController extends Controller
 	 
     public function index()
     {
-		$column = '2788';
+		
+		$column = '2787';
         $surveys = Answer::paginate();
 		$count_surveys = Answer::withCount('instansi')
 				->where('qid',$column)->get();
@@ -34,6 +35,7 @@ class SurveyController extends Controller
 			'count' => $count_surveys,
 			$surveys->toArray()	
 		]);
+		
     }
 
     /**
@@ -59,6 +61,7 @@ class SurveyController extends Controller
 				$detail = '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-detail"  data-id="'.$data->qid.'" ><i class="fa fa-edit"></i> DETAIL</button>';
 				return $detail;
 			})
+			 //->skipPaging()
 			->rawColumns(['Actions','checked'])
 			->make(true);
 	 }
@@ -70,30 +73,15 @@ class SurveyController extends Controller
 		
 		$survey = '789933';
 		$table = 'lime_survey_'.$survey;
-		//print_r($respon.' '.$survey);
+
 		$questions = Question::where(function ($query) use ($survey, $respon) {
 					$query->where('sid', $survey);
 					$query->where('relevance','like','%"'.$respon.'"%');
 					})->select(DB::raw("CONCAT(sid, 'X', gid, 'X', qid) AS columnname, qid"))
 					->first();
-		
-		//print_r($questions);
+
 		$column = $questions->columnname;
-		$qid = $questions->qid;
-		//$column = $table.'.'.$column;
-		/*
-		$detail = Answer::join('lime_survey_'.$survey, 'lime_survey_'.$survey.'.columnname', 'lime_answers.code')
-					->get(['lime_survey_'.$survey.'.columname', '']);
-					
-		$detail = Pmpi::join('lime_answers',function($join1) use ($column, $respon){
-			$join1->on($column, '=', 'lime_answers.code');
-			$join1->where($column, $respon);
-		})->toSql();
-		/*
-		$detail1 = Answer::withCount(['unit' => function(Builder $query) use ($column, $survey){
-			$query->on('lime_survey_'.$survey.'.'.$column, '=', 'lime_answers.code');
-		},])->toSql();
-		*/		
+		$qid = $questions->qid;	
 		
 		$model = new Answer($column);
 		$detail = $model->withCount('unit')

@@ -13,9 +13,13 @@ use \App\Http\Controllers\SurveyController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('welcome');
+});
+*/
+Route::get('/', function() {
+	return view('surveys.page1');
 });
 
 Auth::routes();
@@ -33,7 +37,9 @@ Route::resource('users', \App\Http\Controllers\UserController::class)
 	
 Route::resource('surveys', \App\Http\Controllers\SurveyController::class)
 	->middleware('auth');
-	
+
+Route::get('/getsurvey',[App\Http\Controllers\SurveyController::class, 'getUnit'])->name('module1.category.data');
+
 Route::get('/getsurvey',[App\Http\Controllers\SurveyController::class, 'getUnit'])->name('module.category.data');
 
 Route::get('/detailsurvey/{id}',[App\Http\Controllers\SurveyController::class, 'getDetailsUnit'])->name('module.detail.data');
