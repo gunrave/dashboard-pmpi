@@ -110,7 +110,30 @@ class SurveyController extends Controller
 		//print_r($detail);
 		return DataTables::of($detail)
 			->make(true);
-	}	
+	}
+	public function getGender()
+	 {
+		$column = '2787';
+		$data = Answer::withCount(['instansi' => function(Builder $query){
+			$query->whereNotNull('submitdate');
+		}])		->where('qid',$column)
+				->get(['id', 'code', 'answer', 'qid']);
+				
+		return DataTables::of($data)
+			->addColumn('details_url', function($data) {
+				return url('eloquent/details-data/'. $data->qid);
+				//return '<a href="#edit-'.$data->qid.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+			})
+			->addIndexColumn()
+			
+			->addColumn('Actions', function ($data){
+				$detail = '<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-detail"  data-id="'.$data->qid.'" ><i class="fa fa-edit"></i> DETAIL</button>';
+				return $detail;
+			})
+			 //->skipPaging()
+			->rawColumns(['Actions','checked'])
+			->make(true);
+	 }
 	 
     public function create()
     {

@@ -1,6 +1,6 @@
 @extends('layouts.nice.main')
 @push('nav-zoom')show @endpush
-
+@section('title', 'Dashboard PMPI')
 @section('content_header')	
     <h1 class="m-0 text-dark">Data Responden PMPI</h1>
 @stop
@@ -25,10 +25,6 @@
 				<button type="button" class="btn btn-primary" onclick="window.location='{{ url('/home') }}'">Home</button>
 			@else
 				<button type="button" class="btn btn-primary" onclick="window.location='{{ route('login') }}'">Log in</button>
-
-				@if (Route::has('register'))
-					<button type="button" class="btn btn-primary" onclick="window.location='{{ route('register') }}'">Register</button>
-				@endif
 			@endauth
 		</div>
 	@endif
@@ -41,8 +37,8 @@
 					<img src="https://helpdesk.itjenkumham.com/kumham.png" class="my-2" height="150px" weight="150px" class="img-fluid" alt="Responsive image">
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">Data Responden PMPI <span>| {{ date('d M Y', strtotime(today())) }} | Total : {{ number_format($data->count()) }} pegawai</span></h5>
-					<table id="category-table" class="table " style="width:100%">
+					<h5 class="card-title">Data Responden PMPI <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($data->count()) }} pegawai</h5>
+					<table id="category-table" class="table table-striped " style="width:100%">
 						<thead>
 							<tr>
 								

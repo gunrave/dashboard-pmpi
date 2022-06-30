@@ -19,10 +19,10 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
 			<div class="card"> 
 				<div class="card-body">
-					<table id="category-table" class="table table-hover table-bordered table-stripped table-responsive">
+					<table id="category-table" class="table table-hover table-bordered table-stripped">
 						<thead>
 							<tr>
 								<th></th>
@@ -39,6 +39,29 @@
 				</div>
 			</div>
         </div>
+		<div class="col-md-6">
+			<div class="card"> 
+				<div class="card-body">
+					<table id="category1-table" class="table table-hover table-bordered table-stripped">
+						<thead>
+							<tr>
+								<th></th>
+							   <th>No.</th>
+							   <!--<th>Kelompok</th>
+							   
+								<th>ID</th>-->
+								<th>Unit Kerja/Satker</th>
+								<th>Jenis Kelamin</th>
+								<!--<th width="200" class="text-center">Action</th>-->
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+        </div>
+    </div>
+	 <div class="row">
+        
     </div>
 @stop
 
@@ -91,7 +114,7 @@
 					
 					//{data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
 				],
-				paging: false,
+				responsive: true,
 				order: [[1, 'asc']]
 		});
 		function initTable(tableId, data){
@@ -106,6 +129,7 @@
 					url: url,
 					data: { id: code_id},
 				},
+				responsive: true,
 				columns: [
 					{ data: 'code', name: 'code' },
 					{ data: 'answer', name: 'answer' },

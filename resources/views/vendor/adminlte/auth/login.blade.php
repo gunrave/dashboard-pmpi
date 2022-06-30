@@ -18,6 +18,15 @@
     @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
 @endif
 
+@push('css')
+	<style>
+		body{
+			background-image:url("https://pengaduan.kemenkumham.go.id/img/background.png");
+			background-repeat: repeat;
+		}
+	</style>
+@endpush
+
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
