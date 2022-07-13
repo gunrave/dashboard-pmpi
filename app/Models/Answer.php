@@ -39,5 +39,11 @@ class Answer extends Model
 		
 		return $this->hasMany(Pmpi::class, $this->field, 'code');
 	}
+	
+	public function dalem()
+	{
+		
+		return $this->hasMany(Intern::class, $this->field, 'code');
+	}
 
 }

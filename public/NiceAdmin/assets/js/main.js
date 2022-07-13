@@ -184,7 +184,7 @@
 
   var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  tinymce.init({
+ /* tinymce.init({
     selector: 'textarea.tinymce-editor',
     plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
     imagetools_cors_hosts: ['picsum.photos'],
@@ -226,21 +226,21 @@
     ],
     importcss_append: true,
     file_picker_callback: function(callback, value, meta) {
-      /* Provide file and text for the link dialog */
+      /* Provide file and text for the link dialog 
       if (meta.filetype === 'file') {
         callback('https://www.google.com/logos/google.jpg', {
           text: 'My text'
         });
       }
 
-      /* Provide image and alt text for the image dialog */
+      /* Provide image and alt text for the image dialog 
       if (meta.filetype === 'image') {
         callback('https://www.google.com/logos/google.jpg', {
           alt: 'My alt text'
         });
       }
 
-      /* Provide alternative source and posted for the media dialog */
+      /* Provide alternative source and posted for the media dialog 
       if (meta.filetype === 'media') {
         callback('movie.mp4', {
           source2: 'alt.ogg',

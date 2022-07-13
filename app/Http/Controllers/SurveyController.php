@@ -152,6 +152,33 @@ class SurveyController extends Controller
 			->rawColumns(['Actions','checked'])
 			->make(true);
 	 }
+	 public function getDetailsUnitInternal(Request $request)
+	{
+		$id = $request->input('id');
+		$respon = $id;
+		
+		$survey = '458625';
+		$table = 'lime_survey_'.$survey;
+
+		$questions = Question::where(function ($query) use ($survey, $respon) {
+					$query->where('sid', $survey);
+					$query->where('relevance','like','%"'.$respon.'"%');
+					})->select(DB::raw("CONCAT(sid, 'X', gid, 'X', qid) AS columnname, qid"))
+					->first();
+
+		$column = $questions->columnname;
+		$qid = $questions->qid;	
+		
+		$model = new Answer($column);
+		$detail = $model->withCount(['dalem' => function(Builder $query){
+			$query->whereNotNull('submitdate');
+		}])
+					->where(function ($q) use ($qid){
+						$q->where('qid', $qid);
+					})->get(['code', 'answer']);
+		return DataTables::of($detail)
+			->make(true);
+	}
     public function create()
     {
         //

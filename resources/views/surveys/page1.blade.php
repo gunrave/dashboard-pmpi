@@ -170,6 +170,28 @@
 		});
 		function initTable(tableId, data){
 			var code_id = data['code'];
+			var url = '{{ route('module1.detail.data', ":id") }}';
+			url = url.replace(':id', code_id);
+			
+			$('#' + tableId).DataTable({
+				processing: true,
+				serverSide: true,
+				ajax: {
+					url: url,
+					data: { id: code_id},
+				},
+				columns: [
+					{ data: 'code', name: 'code' },
+					{ data: 'answer', name: 'answer' },
+					{ data: 'dalem_count', name: 'dalem_count' },
+				]
+			});
+			//console.log(code_id);
+			console.log(url);
+			itung += 1;
+		}
+		function initTableEksternal(tableId, data){
+			var code_id = data['code'];
 			var url = '{{ route('module.detail.data', ":id") }}';
 			url = url.replace(':id', code_id);
 			
@@ -194,6 +216,25 @@
 		
 		$('#internal-table tbody').on('click', 'td.details-control', function() {
 			
+			//console.log(itung);
+			var tr = $(this).closest('tr');
+			var row = inttable.row(tr);
+			var tableId = 'details-' + row.data().code;
+			
+			if(row.child.isShown()){
+				row.child.hide();
+				tr.removeClass('shown');
+			}else{
+				row.child(template(row.data())).show();
+				initTable(tableId, row.data());
+				tr.addClass('shown');
+				tr.next().find('td').addClass('no-padding bg-gray');
+			}
+		});
+		
+		$('#eksternal-table tbody').on('click', 'td.details-control', function() {
+			
+			console.log(itung);
 			var tr = $(this).closest('tr');
 			var row = table.row(tr);
 			var tableId = 'details-' + row.data().code;
@@ -203,7 +244,7 @@
 				tr.removeClass('shown');
 			}else{
 				row.child(template(row.data())).show();
-				initTable(tableId, row.data());
+				initTableEksternal(tableId, row.data());
 				tr.addClass('shown');
 				tr.next().find('td').addClass('no-padding bg-gray');
 			}

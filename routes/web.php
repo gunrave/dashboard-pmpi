@@ -41,3 +41,5 @@ Route::get('/getintsurvey',[App\Http\Controllers\SurveyController::class, 'getUn
 Route::get('/getsurvey',[App\Http\Controllers\SurveyController::class, 'getUnit'])->name('module.category.data');
 
 Route::get('/detailsurvey/{id}',[App\Http\Controllers\SurveyController::class, 'getDetailsUnit'])->name('module.detail.data');
+
+Route::get('/detailintsurvey/{id}',[App\Http\Controllers\SurveyController::class, 'getDetailsUnitInternal'])->name('module1.detail.data');
