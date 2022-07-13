@@ -36,7 +36,7 @@ Route::resource('users', \App\Http\Controllers\UserController::class)
 Route::resource('surveys', \App\Http\Controllers\SurveyController::class)
 	->middleware('auth');
 
-Route::get('/getsurvey',[App\Http\Controllers\SurveyController::class, 'getUnit'])->name('module1.category.data');
+Route::get('/getintsurvey',[App\Http\Controllers\SurveyController::class, 'getUnitInternal'])->name('module1.category.data');
 
 Route::get('/getsurvey',[App\Http\Controllers\SurveyController::class, 'getUnit'])->name('module.category.data');
 

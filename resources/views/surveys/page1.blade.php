@@ -19,6 +19,7 @@
 @endpush
 
 @section('content')
+<!--
 	@if (Route::has('login'))
 		<div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
 			@auth
@@ -28,36 +29,71 @@
 			@endauth
 		</div>
 	@endif
+-->
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-3"></div>
+	<div class="col-md-3"></div>
+	<div class="col-md-3">
+		<button type="button" class="btn btn-primary" onclick="window.open('https://survey-itjen.kemenkumham.go.id/index.php/237932?lang=id','_blank')" >Survey Internal</button>
+		<button type="button" class="btn btn-primary" onclick="window.open('https://survey-itjen.kemenkumham.go.id/index.php/385734?lang=id','_blank')" >Survey Eksternal</button>
+	</div>
+</div>
 <div class="row justify-content-center">
-	<div class="col-md-6">
+	<!--<div class="col-md-6">-->
 		<div class="card shadow-lg border-0 rounded-lg mt-3">
 			<div class="card-header">
 				<div class="text-center">
 					<h2 class="text-center">Inspektorat Jenderal</h2>
 					<img src="https://helpdesk.itjenkumham.com/kumham.png" class="my-2" height="150px" weight="150px" class="img-fluid" alt="Responsive image">
 				</div>
-				<div class="card-body">
-					<h5 class="card-title">Data Responden PMPI <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($data->count()) }} pegawai</h5>
-					<table id="category-table" class="table table-striped " style="width:100%">
-						<thead>
-							<tr>
-								
-							   <th scope="col">No.</th>
-							   <!--<th>Kelompok</th>
-							   
-								<th>ID</th>-->
-								<th scope="col">Unit Kerja/Satker</th>
-								<th scope="col">Total Responden</th>
-								<th scope="col">Detail</th>
-								<!--<th width="200" class="text-center">Action</th>-->
-							</tr>
-						</thead>
-						
-					</table>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Data Responden PMPI Eksternal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($ekstern->count()) }} pegawai</h5>
+							<table id="eksternal-table" class="table table-striped " style="width:100%">
+								<thead>
+									<tr>
+										
+									   <th scope="col">No.</th>
+									   <!--<th>Kelompok</th>
+									   
+										<th>ID</th>-->
+										<th scope="col">Unit Kerja/Satker</th>
+										<th scope="col">Total Responden</th>
+										<th scope="col">Detail</th>
+										<!--<th width="200" class="text-center">Action</th>-->
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Data Responden PMPI Internal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($intern->count()) }} pegawai</h5>
+							<table id="internal-table" class="table table-striped " style="width:100%">
+								<thead>
+									<tr>
+										
+									   <th scope="col">No.</th>
+									   <!--<th>Kelompok</th>
+									   
+										<th>ID</th>-->
+										<th scope="col">Unit Kerja/Satker</th>
+										<th scope="col">Total Responden</th>
+										<th scope="col">Detail</th>
+										<!--<th width="200" class="text-center">Action</th>-->
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	<!--</div>-->
+	
 </div>
 
 @stop
@@ -92,7 +128,7 @@
         }
 		
 		var template = Handlebars.compile($("#details-template").html());
-		var table = $('#category-table').DataTable({
+		var table = $('#eksternal-table').DataTable({
 				processing: true,
 				serverSide: true,
 				//autoWidth: false,
@@ -101,6 +137,26 @@
 					{data: 'DT_RowIndex', name : 'DT_RowIndex', orderable:false},
 					{data: 'answer', name: 'answer'},
 					{data: 'instansi_count', name: 'instansi_count'},
+					{
+						"className"		: 'details-control',
+						"corderable"	: false,
+						"searchable"	: false,
+						"data"			: null,
+						"defaultContent": ''
+					},
+					//{data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
+				],
+				//order: [[1, 'asc']]
+		});
+		var inttable = $('#internal-table').DataTable({
+				processing: true,
+				serverSide: true,
+				//autoWidth: false,
+				ajax: '{{ route('module1.category.data') }}',
+				columns: [
+					{data: 'DT_RowIndex', name : 'DT_RowIndex', orderable:false},
+					{data: 'answer', name: 'answer'},
+					{data: 'internal_count', name: 'internal_count'},
 					{
 						"className"		: 'details-control',
 						"corderable"	: false,
@@ -136,12 +192,11 @@
 		}
 		var itung = 0;
 		
-		$('#category-table tbody').on('click', 'td.details-control', function() {
+		$('#internal-table tbody').on('click', 'td.details-control', function() {
 			
 			var tr = $(this).closest('tr');
 			var row = table.row(tr);
 			var tableId = 'details-' + row.data().code;
-			
 			
 			if(row.child.isShown()){
 				row.child.hide();
