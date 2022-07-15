@@ -54,12 +54,24 @@ class SurveyController extends Controller
      */
 	 public function getUnit()
 	 {
-		$column = '2787';
+		$column = '3772';
+		$survey = '385734';
+		$grup = '287';
+		$columnname = $survey.'X'.$grup.'X'.$column;
+		$table = 'lime_survey_'.$survey;
+		
+		$model = new Answer($columnname);
+		
+		$data = $model->withCount(['instansi' => function(Builder $query){
+			$query->whereNotNull('submitdate');
+		}])		->where('qid',$column)
+				->get(['id', 'code', 'answer', 'qid']);
+		/*
 		$data = Answer::withCount(['instansi' => function(Builder $query){
 			$query->whereNotNull('submitdate');
 		}])		->where('qid',$column)
 				->get(['id', 'code', 'answer', 'qid']);
-				
+				*/
 		return DataTables::of($data)
 			->addColumn('details_url', function($data) {
 				return url('eloquent/details-data/'. $data->qid);
@@ -80,7 +92,7 @@ class SurveyController extends Controller
 		$id = $request->input('id');
 		$respon = $id;
 		
-		$survey = '789933';
+		$survey = '385734';
 		$table = 'lime_survey_'.$survey;
 
 		$questions = Question::where(function ($query) use ($survey, $respon) {
@@ -127,17 +139,25 @@ class SurveyController extends Controller
 	 }
 	 public function getUnitInternal()
 	 {
-		$survey = '458625';
-		$grup = '231';
-		$column = '2617';
+		$survey = '237932';
+		$grup = '280';
+		$column = '3598';
+		$columnname = $survey.'X'.$grup.'X'.$column;
 		$table = 'lime_survey_'.$survey;
 		
+		$model = new Answer($columnname);
 		
+		$data = $model->withCount(['internal' => function(Builder $query){
+			$query->whereNotNull('submitdate');
+		}])		->where('qid',$column)
+				->get(['id', 'code', 'answer', 'qid']);
+		
+		/*
 		$data = Answer::withCount(['internal' => function(Builder $query){
 			$query->whereNotNull('submitdate');
 		}])		->where('qid',$column)
 				->get(['id', 'code', 'answer', 'qid']);
-				
+		*/	
 		return DataTables::of($data)
 			->addColumn('details_url', function($data) {
 				return url('eloquent/details-data/'. $data->qid);
@@ -157,7 +177,7 @@ class SurveyController extends Controller
 		$id = $request->input('id');
 		$respon = $id;
 		
-		$survey = '458625';
+		$survey = '237932';
 		$table = 'lime_survey_'.$survey;
 
 		$questions = Question::where(function ($query) use ($survey, $respon) {

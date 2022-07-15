@@ -9,7 +9,7 @@ class Intern extends Model
 {
     use HasFactory;
 	protected $connection = 'mysql2';
-	protected $table = 'lime_survey_458625';
+	protected $table = 'lime_survey_237932';
 	protected $field;
 	
 }

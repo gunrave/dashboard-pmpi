@@ -9,7 +9,7 @@ class Pmpi extends Model
 {
     use HasFactory;
 	protected $connection = 'mysql2';
-	protected $table = 'lime_survey_789933';
+	protected $table = 'lime_survey_385734';
 	protected $field;
 	
 	public function Answer()
