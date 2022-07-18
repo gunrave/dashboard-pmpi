@@ -19,13 +19,11 @@ class Answer extends Model
 	
 	public function instansi()
 	{
-		//$column = '3772';
 		return $this->hasMany(Pmpi::class, $this->field, 'code');
 	}
 	
 	public function internal()
 	{
-		//$column = '3598';
 		return $this->hasMany(Intern::class, $this->field, 'code');
 	}
 	

@@ -199,7 +199,16 @@ class SurveyController extends Controller
 		return DataTables::of($detail)
 			->make(true);
 	}
-    public function create()
+    public function download()
+	{
+		$filePath = public_path("file/Buku Manual PMPI 2022.pdf");
+		$headers = ['Content-Type: application/pdf'];
+		//$filename = time().'.pdf';
+		
+		return response()->download($filePath, "Buku Manual PMPI 2022.pdf", $headers);
+	}
+	
+	public function create()
     {
         //
     }
