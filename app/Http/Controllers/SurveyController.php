@@ -23,27 +23,61 @@ class SurveyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	 public function __construct()
+	 {
+		 $this->startdate = '2022-07-25 00:00:00';
+	 }
+	 
 	 
     public function index()
     {
+		$gender_intern = '3635';
+		$old_intern = '3634';
+		$disco_intern = '280';
+		$survey_intern = '237932';
+		$table_intern = 'lime_survey_'.$survey_intern;
+		$column_intern = $survey_intern.'X'.$disco_intern.'X'.$gender_intern;
 		
-		$column = '2787';
-        $surveys = Answer::paginate();
-		$count_surveys = Answer::withCount('instansi')
-				->where('qid',$column)->get();
+		$gender_ekstern = '3816';
+		$disco_ekstern = '287';
+		$survey_ekstern = '385734';
+		$table_ekstern = 'lime_survey_'.$survey_ekstern;
+		$column_ekstern = $survey_ekstern.'X'.$disco_ekstern.'X'.$gender_ekstern;
 		
-		return view('surveys.index',[
-			'surveys' => $surveys,
-			'count' => $count_surveys,
-			$surveys->toArray()	
-		]);
+		$pegawai = Intern::where('startdate', '>=',$this->startdate);
+		$responden = Pmpi::where('startdate', '>=',$this->startdate);
+		//Cek gender internal
+		$interns = Intern::select(DB::raw("COUNT(".$column_intern.") AS count"), DB::raw($column_intern." AS gender"))
+				
+				->where('startdate', '>=',$this->startdate)
+				->groupBy(DB::raw($column_intern))
+				->pluck('count', 'gender');
+		
+		$labels = $interns->keys();
+		$data = $interns->values();
+		//Cek gender eksternal
+		$eksterns = Pmpi::select(DB::raw("COUNT(".$column_ekstern.") AS count"), DB::raw($column_ekstern." AS gender"))
+				->where('startdate', '>=',$this->startdate)
+				->groupBy(DB::raw($column_ekstern))
+				->pluck('count', 'gender');
+		
+		$labels_intern = $interns->keys();
+		$data_intern = $interns->values();
+		
+		$labels_ekstern = $eksterns->keys();
+		$data_ekstern = $eksterns->values();
+		
+		$ekstern = Pmpi::where('startdate', '>=',$this->startdate);
+		$intern = Intern::where('startdate', '>=',$this->startdate);
+	
+		return view('surveys.index',compact('labels_intern', 'data_intern', 'pegawai', 'labels_ekstern', 'data_ekstern', 'responden', 'ekstern','intern'));
 		
     }
 	
 	public function dash()
 	{
-		$ekstern = Pmpi::whereNotNull('submitdate');
-		$intern = Intern::whereNotNull('submitdate');
+		$ekstern = Pmpi::where('startdate', '>=',$this->startdate);
+		$intern = Intern::where('startdate', '>=',$this->startdate);
 		return view('surveys.page1', compact(['ekstern','intern']));
 	}
 
@@ -63,8 +97,8 @@ class SurveyController extends Controller
 		$model = new Answer($columnname);
 		
 		$data = $model->withCount(['instansi' => function(Builder $query){
-			$query->whereNotNull('submitdate');
-		}])		->where('qid',$column)
+			$query->where('startdate', '>=',$this->startdate) ;
+				}])->where('qid',$column)
 				->get(['id', 'code', 'answer', 'qid']);
 		/*
 		$data = Answer::withCount(['instansi' => function(Builder $query){
@@ -106,7 +140,7 @@ class SurveyController extends Controller
 		
 		$model = new Answer($column);
 		$detail = $model->withCount(['unit' => function(Builder $query){
-			$query->whereNotNull('submitdate');
+			$query->where('startdate', '>=',$this->startdate);
 		}])
 					->where(function ($q) use ($qid){
 						$q->where('qid', $qid);
@@ -148,7 +182,7 @@ class SurveyController extends Controller
 		$model = new Answer($columnname);
 		
 		$data = $model->withCount(['internal' => function(Builder $query){
-			$query->whereNotNull('submitdate');
+			$query->where('startdate', '>=',$this->startdate);
 		}])		->where('qid',$column)
 				->get(['id', 'code', 'answer', 'qid']);
 		
@@ -191,7 +225,7 @@ class SurveyController extends Controller
 		
 		$model = new Answer($column);
 		$detail = $model->withCount(['dalem' => function(Builder $query){
-			$query->whereNotNull('submitdate');
+			$query->where('startdate', '>=',$this->startdate);
 		}])
 					->where(function ($q) use ($qid){
 						$q->where('qid', $qid);

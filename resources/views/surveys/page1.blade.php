@@ -19,17 +19,6 @@
 @endpush
 
 @section('content')
-<!--
-	@if (Route::has('login'))
-		<div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-			@auth
-				<button type="button" class="btn btn-primary" onclick="window.location='{{ url('/home') }}'">Home</button>
-			@else
-				<button type="button" class="btn btn-primary" onclick="window.location='{{ route('login') }}'">Log in</button>
-			@endauth
-		</div>
-	@endif
--->
 <div class="row">
 	<div class="col-md-3"></div>
 	<div class="col-md-3"></div>
@@ -37,7 +26,7 @@
 	<div class="col-md-4">
 		<button type="button" class="btn btn-primary" onclick="window.open('https://survey-itjen.kemenkumham.go.id/index.php/237932?lang=id','_blank')" ><i class="bi bi-arrow-bar-down"> </i>Survey Internal</button>
 		<button type="button" class="btn btn-primary" onclick="window.open('https://survey-itjen.kemenkumham.go.id/index.php/385734?lang=id','_blank')" ><i class="bi bi-arrow-bar-up"> </i>Survey Eksternal</button>
-		<a href="/download-file" class="btn btn-primary"><i class="bi bi-cloud-download-fill"> </i> Buku Panduan</a>
+		<a href="{{ route('file.buku.panduan') }}" class="btn btn-primary"><i class="bi bi-cloud-download-fill"> </i> Buku Panduan</a>
 	</div>
 </div>
 <div class="row justify-content-center">
@@ -51,8 +40,8 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="card-body">
-							<h5 class="card-title">Data Responden PMPI Eksternal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($ekstern->count()) }} responden</h5>
-							<table id="eksternal-table" class="table table-striped " style="width:100%">
+							<h5 class="card-title">Data Responden PMPI Internal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($intern->count()) }} pegawai</h5>
+							<table id="internal-table" class="table table-striped " style="width:100%">
 								<thead>
 									<tr>
 										
@@ -71,8 +60,8 @@
 					</div>
 					<div class="col-md-6">
 						<div class="card-body">
-							<h5 class="card-title">Data Responden PMPI Internal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($intern->count()) }} pegawai</h5>
-							<table id="internal-table" class="table table-striped " style="width:100%">
+							<h5 class="card-title">Data Responden PMPI Eksternal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($ekstern->count()) }} responden</h5>
+							<table id="eksternal-table" class="table table-striped " style="width:100%">
 								<thead>
 									<tr>
 										

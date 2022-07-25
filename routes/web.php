@@ -44,4 +44,4 @@ Route::get('/detailsurvey/{id}',[App\Http\Controllers\SurveyController::class, '
 
 Route::get('/detailintsurvey/{id}',[App\Http\Controllers\SurveyController::class, 'getDetailsUnitInternal'])->name('module1.detail.data');
 
-Route::get('/download-file', [SurveyController::class, 'download'])->name('file.download/index');
+Route::get('/download-file', [SurveyController::class, 'download'])->name('file.buku.panduan');

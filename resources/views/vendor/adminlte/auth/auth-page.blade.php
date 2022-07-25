@@ -13,10 +13,7 @@
     @yield('css')
 @stop
 
-@section('classes_body')
-	{{ ($auth_type ?? 'login') . '-page' }}
-	
-@stop
+@section('classes_body'){{ ($auth_type ?? 'login') . '-page' }}@stop
 
 @section('body')
     <div class="{{ $auth_type ?? 'login' }}-box">
@@ -24,8 +21,8 @@
         {{-- Logo --}}
         <div class="{{ $auth_type ?? 'login' }}-logo">
             <a href="{{ $dashboard_url }}">
-                <img src="https://helpdesk.itjenkumham.com/kumham.png" height="50">
-                {!! config('adminlte.logo', '<b>Admin</b>') !!}
+                <img src="{{ asset(config('adminlte.logo_img')) }}" height="50">
+                {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
             </a>
         </div>
 

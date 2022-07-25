@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Scopes\FilteredData;
 
 class Pmpi extends Model
 {
@@ -15,5 +16,10 @@ class Pmpi extends Model
 	public function Answer()
 	{
 		return $this->belongsTo(Answer::class);
+	}
+	
+	protected static function booted()
+	{
+		static::addGlobalScope(new FilteredData);
 	}
 }
