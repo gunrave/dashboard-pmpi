@@ -250,6 +250,12 @@ return [
 			'text' => 'Survey PMPI',
 			'url' => '/surveys',
 			'icon' => 'fa fa-address-book',
+			'submenu' => [
+				[
+					'text' => 'Demography',
+                    'url'  => '/surveys',
+				],
+			]
 		],
         [
             'text' => 'blog',

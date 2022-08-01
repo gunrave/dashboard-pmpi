@@ -37,33 +37,24 @@ class SurveyController extends Controller
 		$survey_intern = '237932';
 		$table_intern = 'lime_survey_'.$survey_intern;
 		$column_intern = $survey_intern.'X'.$disco_intern.'X'.$gender_intern;
+		$model_intern = 'Intern';
 		
 		$gender_ekstern = '3816';
 		$disco_ekstern = '287';
 		$survey_ekstern = '385734';
 		$table_ekstern = 'lime_survey_'.$survey_ekstern;
 		$column_ekstern = $survey_ekstern.'X'.$disco_ekstern.'X'.$gender_ekstern;
+		$model_ekstern = 'Pmpi';
 		
 		$pegawai = Intern::where('startdate', '>=',$this->startdate);
 		$responden = Pmpi::where('startdate', '>=',$this->startdate);
 		//Cek gender internal
-		$interns = Intern::select(DB::raw("COUNT(".$column_intern.") AS count"), DB::raw($column_intern." AS gender"))
-				
-				->where('startdate', '>=',$this->startdate)
-				->groupBy(DB::raw($column_intern))
-				->pluck('count', 'gender');
-		
-		$labels = $interns->keys();
-		$data = $interns->values();
-		//Cek gender eksternal
-		$eksterns = Pmpi::select(DB::raw("COUNT(".$column_ekstern.") AS count"), DB::raw($column_ekstern." AS gender"))
-				->where('startdate', '>=',$this->startdate)
-				->groupBy(DB::raw($column_ekstern))
-				->pluck('count', 'gender');
-		
+		$interns = $this->QueIntern($survey_intern, $disco_intern, $gender_intern);
 		$labels_intern = $interns->keys();
 		$data_intern = $interns->values();
-		
+
+		//Cek gender eksternal
+		$eksterns = $this->QueEkstern($survey_ekstern, $disco_ekstern, $gender_ekstern);
 		$labels_ekstern = $eksterns->keys();
 		$data_ekstern = $eksterns->values();
 		
@@ -73,6 +64,21 @@ class SurveyController extends Controller
 		return view('surveys.index',compact('labels_intern', 'data_intern', 'pegawai', 'labels_ekstern', 'data_ekstern', 'responden', 'ekstern','intern'));
 		
     }
+	
+	public function QueIntern($survey, $group, $question){
+		$column = $survey.'X'.$group.'X'.$question;
+		return Intern::select(DB::raw("COUNT(".$column.") AS data"), DB::raw($column." AS label"))
+				->where('startdate', '>=',$this->startdate)
+				->groupBy(DB::raw($column))
+				->pluck('data', 'label');
+	}
+	public function QueEkstern($survey, $group, $question){
+		$column = $survey.'X'.$group.'X'.$question;
+		return Pmpi::select(DB::raw("COUNT(".$column.") AS data"), DB::raw($column." AS label"))
+				->where('startdate', '>=',$this->startdate)
+				->groupBy(DB::raw($column))
+				->pluck('data', 'label');
+	}
 	
 	public function dash()
 	{

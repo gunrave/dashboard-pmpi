@@ -20,7 +20,8 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-			<div class="card"> 
+			<div class="card">
+				
 				<div class="card-body">
 					<div class="row">
 					<h5 class="card-title">Data Responden PMPI Internal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($intern->count()) }} pegawai</h5>
@@ -41,13 +42,14 @@
 						</thead>
 					</table>
 				</div>
+				
 			</div>
         </div>
 		<div class="col-md-6">
 			<div class="card"> 
 				<div class="card-body">
 					<div class="row">
-					<h5 class="card-title">Data Responden PMPI Eksternal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($ekstern->count()) }} responden</h5>
+						<h5 class="card-title">Data Responden PMPI Eksternal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($ekstern->count()) }} responden</h5>
 					</div>
 					<table id="eksternal-table" class="table table-striped " style="width:100%">
 						<thead>
@@ -71,28 +73,62 @@
 	 <div class="row">
 		<div class="col-md-6">
 			<div class="card">
+				<div class="card-header">
+					<div class="card-title">
+						Demography Internal
+					</div>
+					<div class="card-tools">
+						<ul class="nav nav-pills ml-auto" id="pills-tab" role="tablist">
+						  <li class="nav-item">
+							<a class="nav-link active" id="pills-jk-tab" data-toggle="pill" href="#pills-jk" role="tab" aria-controls="pills-jk" aria-selected="true">Gender</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="pills-usia-tab" data-toggle="pill" href="#pills-usia" role="tab" aria-controls="pills-usia" aria-selected="false">Usia</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="pills-pendidikan-tab" data-toggle="pill" href="#pills-pendidikan" role="tab" aria-controls="pills-pendidikan" aria-selected="false">Pendidikan</a>
+						  </li>
+						</ul>
+					</div>
+				</div>
 				<div class="card-body">
-					<canvas id="myChart"></canvas>
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="pills-jk" role="tabpanel" aria-labelledby="pills-jk-tab">
+							<canvas id="myChart"></canvas>
+						</div>
+						<div class="tab-pane fade" id="pills-usia" role="tabpanel" aria-labelledby="pills-usia-tab">
+							<canvas id="old"></canvas>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="card">
+				<div class="card-header">
+					<div class="card-title">
+						Demography Eksternal
+					</div>
+					<div class="card-tools">
+						<ul class="nav nav-pills ml-auto" id="pills-tab" role="tablist">
+						  <li class="nav-item">
+							<a class="nav-link active" id="pills-jk-tab" data-toggle="pill" href="#pills-jk" role="tab" aria-controls="pills-jk" aria-selected="true">Gender</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="pills-usia-tab" data-toggle="pill" href="#pills-usia" role="tab" aria-controls="pills-usia" aria-selected="false">Usia</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" id="pills-pendidikan-tab" data-toggle="pill" href="#pills-pendidikan" role="tab" aria-controls="pills-pendidikan" aria-selected="false">Pendidikan</a>
+						  </li>
+						</ul>
+					</div>
+				</div>
 				<div class="card-body">
 					<canvas id="myChartEks"></canvas>
 				</div>
 			</div>
 		</div>
     </div>
-	<div class="row">
-		<div class="col-md-6">
-			<div class="card">
-				<div class="card-body">
-					<canvas id="old"></canvas>
-				</div>
-			</div>
-		</div>
-	</div>
 @stop
 
 @push('js')
@@ -183,8 +219,8 @@
 	};
 	
 	const config_old = {
-		type: 'bar
-		data: data_eks,
+		type: 'bar',
+		data: data,
 		options: {
 			responsive: true,
 			plugins: {
