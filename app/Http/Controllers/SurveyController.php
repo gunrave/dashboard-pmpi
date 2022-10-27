@@ -66,9 +66,9 @@ class SurveyController extends Controller
     }
 	
 	public function QueIntern($survey, $group, $question){
-		$column = $survey.'X'.$group.'X'.$question;
-		return Intern::select(DB::raw("COUNT(".$column.") AS data"), DB::raw($column." AS label"))
-				->where('startdate', '>=',$this->startdate)
+		$column = $survey.'X'.$group.'X'.$question;//inisiasi kolom yang akan di pakai
+		return Intern::select(DB::raw("COUNT(".$column.") AS data"), DB::raw($column." AS label"))//inisiasi kolom apa yang akan dijadikan data dan label pada Tabel PMPI Internal
+				->where('startdate', '>=',$this->startdate)//data yang digunakan adalah data setelah tanggal 25 Juli 2022
 				->groupBy(DB::raw($column))
 				->pluck('data', 'label');
 	}
@@ -103,9 +103,10 @@ class SurveyController extends Controller
 		$model = new Answer($columnname);
 		
 		$data = $model->withCount(['instansi' => function(Builder $query){
-			$query->where('startdate', '>=',$this->startdate) ;
-				}])->where('qid',$column)
-				->get(['id', 'code', 'answer', 'qid']);
+							$query->where('startdate', '>=',$this->startdate) ;
+						}])
+					  ->where('qid',$column)
+				      ->get(['id', 'code', 'answer', 'qid']);
 		/*
 		$data = Answer::withCount(['instansi' => function(Builder $query){
 			$query->whereNotNull('submitdate');

@@ -16,13 +16,16 @@ class Answer extends Model
 		$this->field = $field;
 	}
 	
-	
 	public function instansi()
 	{
 		return $this->hasMany(Pmpi::class, $this->field, 'code');
 	}
 	
 	public function internal()
+	{
+		return $this->hasMany(Intern::class, $this->field, 'code');
+	}
+	public function dalem()
 	{
 		return $this->hasMany(Intern::class, $this->field, 'code');
 	}
@@ -34,14 +37,10 @@ class Answer extends Model
 
 	public function unit()
 	{
-		
 		return $this->hasMany(Pmpi::class, $this->field, 'code');
 	}
-	
-	public function dalem()
+	public function sekre()
 	{
-		
-		return $this->hasMany(Intern::class, $this->field, 'code');
+		return $this->hasMany(Layanan::class, $this->field, 'code');
 	}
-
 }

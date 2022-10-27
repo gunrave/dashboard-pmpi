@@ -108,6 +108,19 @@
 		</table>
 	</script>
 	
+	<script id="details-ex-template" type="text/x-handlebars-template">
+		<div class="label label-info">@{{answer}}</div>
+		<table class="table details-table" id="details-ex-@{{code}}" style="width:100%">
+			<thead>
+			<tr>
+				<th>ID</td>
+				<th>Unit Kerja</td>
+				<th>Jumlah Responden</td>
+			</tr>
+			</thead>
+		</table>
+	</script>
+	
     <script>
         function notificationBeforeDelete(event, el) {
             event.preventDefault();
@@ -118,6 +131,7 @@
         }
 		
 		var template = Handlebars.compile($("#details-template").html());
+		var templateEx = Handlebars.compile($("#details-ex-template").html());
 		var table = $('#eksternal-table').DataTable({
 				processing: true,
 				serverSide: true,
@@ -227,13 +241,13 @@
 			console.log(itung);
 			var tr = $(this).closest('tr');
 			var row = table.row(tr);
-			var tableId = 'details-' + row.data().code;
+			var tableId = 'details-ex-' + row.data().code;
 			
 			if(row.child.isShown()){
 				row.child.hide();
 				tr.removeClass('shown');
 			}else{
-				row.child(template(row.data())).show();
+				row.child(templateEx(row.data())).show();
 				initTableEksternal(tableId, row.data());
 				tr.addClass('shown');
 				tr.next().find('td').addClass('no-padding bg-gray');

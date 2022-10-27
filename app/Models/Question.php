@@ -10,6 +10,11 @@ class Question extends Model
     use HasFactory;
 	protected $connection = 'mysql2';
 	protected $table = 'lime_questions';
+	protected $field;
+	public function __construct($field = 'id')
+	{
+		$this->field = $field;
+	}
 	
 	public function survey()
 	{

@@ -128,7 +128,7 @@ return [
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
+    'classes_sidebar_nav' => 'nav-child-indent',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
@@ -248,12 +248,35 @@ return [
 		],
 		[
 			'text' => 'Survey PMPI',
-			'url' => '/surveys',
+			//'url' => '/surveys',
 			'icon' => 'fa fa-address-book',
 			'submenu' => [
 				[
-					'text' => 'Demography',
+					'text' => 'Responden',
                     'url'  => '/surveys',
+				],
+				[
+					'text' => 'Demografi',
+                    'url'  => '/demografi',
+				],
+				[
+					'text' => 'Analisis Internal',
+                    'url'  => '/analisis',
+				],
+				[
+					'text' => 'Analisis Eksternal',
+                    'url'  => '/analisisext',
+				],
+			]
+		],
+		[
+			'text' => 'Survey Layanan Internal Itjen',
+			//'url' => '/surveys',
+			'icon' => 'fa fa-address-book',
+			'submenu' => [
+				[
+					'text' => 'Responden',
+                    'url'  => '/surveysint',
 				],
 			]
 		],
@@ -279,44 +302,6 @@ return [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
         ],
         ['header' => 'labels'],
         [
@@ -407,7 +392,7 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -416,8 +401,18 @@ return [
                 ],
             ],
         ],
+		'Chartjs-plugin-datalabels' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0',
+                ],
+            ],
+        ],
 		'Highchartjs' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',

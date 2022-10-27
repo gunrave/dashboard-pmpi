@@ -1,7 +1,7 @@
 @extends('adminlte::page')
-@section('title', 'Data Responden PMPI')
+@section('title', 'Data Responden Layanan Internal Itjen')
 @section('content_header')	
-    <h1 class="m-0 text-dark">Data Responden PMPI</h1>
+    <h1 class="m-0 text-dark">Data Responden Layanan Internal Itjen</h1>
 @stop
 
 @push('css')
@@ -19,184 +19,37 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
 			<div class="card">
 				
 				<div class="card-body">
 					<div class="row">
-					<h5 class="card-title">Data Responden PMPI Internal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($intern->count()) }} pegawai</h5>
+					<h5 class="card-title">Data Responden Layanan Internal Itjen <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($total->count()) }} pegawai</h5>
 					</div>
-					<table id="internal-table" class="table table-striped " style="width:100%">
+					<table id="layanan-table" class="table table-striped " style="width:100%">
 						<thead>
 							<tr>
-								
 							   <th scope="col">No.</th>
-							   <!--<th>Kelompok</th>
-							   
-								<th>ID</th>-->
 								<th scope="col">Unit Kerja/Satker</th>
 								<th scope="col">Total Responden</th>
-								<th scope="col">Detail</th>
+								<th scope="col">P2L</th>
+								<th scope="col">WAI</th>
+								<th scope="col">UMUM</th>
+								<th scope="col">SIP</th>
+								<th scope="col">Nilai Akhir</th>
 								<!--<th width="200" class="text-center">Action</th>-->
 							</tr>
 						</thead>
 					</table>
 				</div>
 				
-			</div>
-        </div>
-		<div class="col-md-6">
-			<div class="card"> 
-				<div class="card-body">
-					<div class="row">
-						<h5 class="card-title">Data Responden PMPI Eksternal <span>| {{ date('d M Y', strtotime(today())) }} |</span> Total : {{ number_format($ekstern->count()) }} responden</h5>
-					</div>
-					<table id="eksternal-table" class="table table-striped " style="width:100%">
-						<thead>
-							<tr>
-								
-							   <th scope="col">No.</th>
-							   <!--<th>Kelompok</th>
-							   
-								<th>ID</th>-->
-								<th scope="col">Unit Kerja/Satker</th>
-								<th scope="col">Total Responden</th>
-								<th scope="col">Detail</th>
-								<!--<th width="200" class="text-center">Action</th>-->
-							</tr>
-						</thead>
-					</table>
-				</div>
 			</div>
         </div>
     </div>
 @stop
 
 @push('js')
-<script>
-///*
-	var labels = {{ Js::from($labels_intern) }};
-	var labels_eks = {{ Js::from($labels_ekstern) }};
-	var users = {{ Js::from($data_intern) }};
-	var users_eks = {{ Js::from($data_ekstern) }};
-	
-	const data = {
-		labels : labels,
-		datasets : [{
-			labels : 'My First dataset',
-			backgroundColor: [
-				'#ff66cc',
-				'#6699ff'
-			],
-			borderColor: [
-				'#CDA776',
-				'#989898'
-			],
-			//borderWidth: [1, 1, 1, 1, 1,1,1],
-			data:users,
-		}]
-	};
-	
-	const data_eks = {
-		labels : labels_eks,
-		datasets : [{
-			labels : 'My First dataset',
-			backgroundColor: [
-				'#6ade8a',
-				'#ff66cc'
-			],
-			borderColor: [
-				'#CDA776',
-				'#989898'
-			],
-			//borderWidth: [1, 1, 1, 1, 1,1,1],
-			data:users_eks,
-		}]
-	};
-	
-	const config = {
-		type: 'doughnut',
-		data: data,
-		options: {
-			responsive: true,
-			plugins: {
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: 'Jenis Kelamin Responden Internal'
-				},
-				subtitle: {
-					display: true,
-					text: 'Total : {{ number_format($pegawai->count()) }} pegawai'
-				},
-			}
-		},
-	};
-	
-	const config_eks = {
-		type: 'doughnut',
-		data: data_eks,
-		options: {
-			responsive: true,
-			plugins: {
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: 'Jenis Kelamin Responden Eksternal'
-				},
-				subtitle: {
-					display: true,
-					text: 'Total : {{ number_format($responden->count()) }} responden'
-				},
-			}
-		},
-		
-	};
-	
-	const config_old = {
-		type: 'bar',
-		data: data,
-		options: {
-			responsive: true,
-			plugins: {
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: 'Jenis Kelamin Responden Eksternal'
-				},
-				subtitle: {
-					display: true,
-					text: 'Total : {{ number_format($responden->count()) }} responden'
-				},
-			}
-		},
-		
-	};
-	
-	const myChart = new Chart(
-		document.getElementById('myChart'),
-		config
-	);
-	
-	const myChart_eks = new Chart(
-		document.getElementById('myChartEks'),
-		config_eks
-	);
-	
-	const old_in = new Chart(
-		document.getElementById('old'),
-		config_old
-	);
-//*/
-</script>
-	
-	
+
     <form action="" id="delete-form" method="post">
         @method('delete')
         @csrf
@@ -226,24 +79,17 @@
         }
 		
 		var template = Handlebars.compile($("#details-template").html());
-		var table = $('#eksternal-table').DataTable({
+		var table = $('#layanan-table').DataTable({
 				responsive: true,
 				processing: true,
 				serverSide: true,
 				//deferRender: true,
 				//autoWidth: false,
-				ajax: '{{ route('module.category.data') }}',
+				ajax: '{{ route('ambil.data') }}',
 				columns: [
 					{data: 'DT_RowIndex', name : 'DT_RowIndex', orderable:false},
 					{data: 'answer', name: 'answer'},
-					{data: 'instansi_count', name: 'instansi_count'},
-					{
-						"className"		: 'details-control',
-						"corderable"	: false,
-						"searchable"	: false,
-						"data"			: null,
-						"defaultContent": ''
-					},
+					{data: 'sekre_count', name: 'sekre_count'},
 					//{data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
 				],
 				//order: [[1, 'asc']]
